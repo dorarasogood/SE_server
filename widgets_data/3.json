@@ -1,0 +1,56 @@
+[
+    {
+        "series": "Existing Cabinets",
+        "values": [
+            [
+                "SITE A",
+                "79"
+            ],
+            [
+                "SITE B",
+                "95"
+            ],
+            [
+                "SITE C",
+                "8"
+            ],
+            [
+                "SITE COLO",
+                "70"
+            ],
+            [
+                "SITE IDF",
+                "16"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    },
+    {
+        "series": "Potenial New Cabinets",
+        "values": [
+            [
+                "SITE A",
+                "30"
+            ],
+            [
+                "SITE B",
+                "0"
+            ],
+            [
+                "SITE C",
+                "23"
+            ],
+            [
+                "SITE COLO",
+                "0"
+            ],
+            [
+                "SITE IDF",
+                "46"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    }
+]

@@ -1,0 +1,17 @@
+[
+    {
+        "series": "Cabinet Licenses",
+        "values": [
+            [
+                "Remaining Licenses",
+                "16532"
+            ],
+            [
+                "Used Licenses",
+                "268"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    }
+]

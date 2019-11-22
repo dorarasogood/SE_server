@@ -1,0 +1,56 @@
+[
+    {
+        "series": "Connected",
+        "values": [
+            [
+                "SITE A",
+                "4081"
+            ],
+            [
+                "SITE B",
+                "3335"
+            ],
+            [
+                "SITE C",
+                "107"
+            ],
+            [
+                "SITE COLO",
+                "0"
+            ],
+            [
+                "SITE IDF",
+                "112"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    },
+    {
+        "series": "Free",
+        "values": [
+            [
+                "SITE A",
+                "5430"
+            ],
+            [
+                "SITE B",
+                "3326"
+            ],
+            [
+                "SITE C",
+                "187"
+            ],
+            [
+                "SITE COLO",
+                "1128"
+            ],
+            [
+                "SITE IDF",
+                "412"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    }
+]

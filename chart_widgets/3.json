@@ -1,0 +1,161 @@
+{
+    "id": 3,
+    "title": "Floor Space Capacity",
+    "chart_type": "multiBarChart",
+    "stacked": true,
+    "caption": "Shows the actual number of installed cabinets vs. an estimated number of additional cabinets that can be placed in each location, based on the area of the Location and the selected rule of thumb Area/Cabinet. The area per cabinet allows for the footprint of the cabinet, aisle space in front and behind the cabinet, aisles perpendicular to rows and space for electrical and mechanical items. Filtered by Cabinet Status.",
+    "refresh_interval": 1800,
+    "x_axis_label": null,
+    "x_axis_tick_format": "text",
+    "x_axis_show_min_max": false,
+    "y_axis_label": "Cabinet Count",
+    "y_axis_tick_format": "number.0",
+    "system": true,
+    "lookup_key": "FloorSpacePerLocation",
+    "details_data_source_id": 6,
+    "normalizer": "Dashboardr::Converters::ChartWidgetDataNormalizer",
+    "y2_axis_label": null,
+    "y2_axis_tick_format": null,
+    "show_controls": false,
+    "donut": "0.0",
+    "show_legend": true,
+    "show_labels": true,
+    "show_values": true,
+    "donut_labels_outside": true,
+    "donut_label_sunbeam_layout": false,
+    "donut_label_type": "value",
+    "multi_series_tooltip": false,
+    "x_axis_rotate_labels": 0,
+    "x_axis_stagger_labels": false,
+    "x_axis_wrap_labels": true,
+    "x_axis_reduce_ticks": false,
+    "x_axis_tick_padding": 7,
+    "margin_bottom": 50,
+    "margin_left": 70,
+    "y_axis_show_min_max": true,
+    "y2_axis_show_min_max": true,
+    "parameters": [
+        {
+            "id": 15,
+            "key": "include_planned",
+            "name": "Status",
+            "description": "Pick List of Include Planned/Exclude Planned",
+            "lookup_key": "include_planned",
+            "system": true,
+            "multi_select": false,
+            "select_all": false,
+            "type": "Dashboardr::PickListParameter",
+            "parameter_picks": [
+                {
+                    "id": 54,
+                    "parameter_id": 15,
+                    "name": "Include Planned",
+                    "value": "5081,5082",
+                    "position": 1
+                },
+                {
+                    "id": 55,
+                    "parameter_id": 15,
+                    "name": "Exclude Planned",
+                    "value": "5082",
+                    "position": 2
+                }
+            ],
+            "parents": [],
+            "selected_pick_ids": []
+        },
+        {
+            "id": 37,
+            "key": "area_per_cabinet",
+            "name": "Area/Cabinet",
+            "description": "Pick List of Area Per Cabinet Rule of Thumb",
+            "lookup_key": "area_per_cabinet",
+            "system": true,
+            "multi_select": false,
+            "select_all": false,
+            "type": "Dashboardr::PickListParameter",
+            "parameter_picks": [
+                {
+                    "id": 144,
+                    "parameter_id": 37,
+                    "name": "25 sq.ft. = 2.32 sq.m.",
+                    "value": "25",
+                    "position": 1
+                },
+                {
+                    "id": 145,
+                    "parameter_id": 37,
+                    "name": "26 sq.ft. = 2.42 sq.m.",
+                    "value": "26",
+                    "position": 2
+                },
+                {
+                    "id": 146,
+                    "parameter_id": 37,
+                    "name": "27 sq.ft. = 2.51 sq.m.",
+                    "value": "27",
+                    "position": 3
+                },
+                {
+                    "id": 147,
+                    "parameter_id": 37,
+                    "name": "28 sq.ft. = 2.60 sq.m.",
+                    "value": "28",
+                    "position": 4
+                },
+                {
+                    "id": 148,
+                    "parameter_id": 37,
+                    "name": "29 sq.ft. = 2.70 sq.m.",
+                    "value": "29",
+                    "position": 5
+                },
+                {
+                    "id": 149,
+                    "parameter_id": 37,
+                    "name": "30 sq.ft. = 2.79 sq.m.",
+                    "value": "30",
+                    "position": 6
+                },
+                {
+                    "id": 150,
+                    "parameter_id": 37,
+                    "name": "31 sq.ft. = 2.88 sq.m.",
+                    "value": "31",
+                    "position": 7
+                },
+                {
+                    "id": 151,
+                    "parameter_id": 37,
+                    "name": "32 sq.ft. = 2.97 sq.m.",
+                    "value": "32",
+                    "position": 8
+                },
+                {
+                    "id": 152,
+                    "parameter_id": 37,
+                    "name": "33 sq.ft. = 3.07 sq.m.",
+                    "value": "33",
+                    "position": 9
+                },
+                {
+                    "id": 153,
+                    "parameter_id": 37,
+                    "name": "34 sq.ft. = 3.16 sq.m.",
+                    "value": "34",
+                    "position": 10
+                },
+                {
+                    "id": 154,
+                    "parameter_id": 37,
+                    "name": "35 sq.ft. = 3.25 sq.m.",
+                    "value": "35",
+                    "position": 11
+                }
+            ],
+            "parents": [],
+            "selected_pick_ids": []
+        }
+    ],
+    "details_data_source": "Details-FloorSpacePerLocation"
+}

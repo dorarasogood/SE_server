@@ -1,0 +1,21 @@
+[
+    {
+        "series": "Request Issued",
+        "values": [
+            [
+                "SITE A",
+                "1"
+            ],
+            [
+                "SITE B",
+                "2"
+            ],
+            [
+                "SITE C",
+                "1"
+            ]
+        ],
+        "y_axis": "1",
+        "type": null
+    }
+]
