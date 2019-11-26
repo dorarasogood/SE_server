@@ -123,7 +123,8 @@ app.delete('/user/delete', function(req, res){
             for(const property in accountDB){
                 obj.users.push({
                     "userName": property,
-                    "password": accountDB[property].password
+                    "password": accountDB[property].password,
+                    "patient_id": accountDB[property].patient_id
                 })
             }
             let data = JSON.stringify(obj);
