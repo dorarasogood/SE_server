@@ -2,6 +2,11 @@ const express = require('express');
 const jsonfile = require('jsonfile')
 var cors = require('cors');
 var bodyParser = require('body-parser');
+const fs = require('fs');
+const http = require("http");
+var qs = require('qs');
+const request = require('request');
+
 var app = express();
 const corsOptions = {
     origin: [
@@ -32,183 +37,14 @@ jsonfile.readFile(account)
         .then((obj) => {
             obj.users.forEach(element => {
                 accountDB[element.userName] = {
-                    id:element.id,
-                    password: element.password 
+                    password: element.password,
+                    patient_id: element.patient_id 
                 }; 
             });
         })
         .catch(error => console.error(error))
 
-
-
-
 app.use(cors(corsOptions));
-
-app.post('/test', function (req, res) {
-    console.log("BBB001", req);
-    // res.header("Access-Control-Allow-Headers", "X-Requested-With, Content-Type");
-    var obj = new Object();
-    obj = {
-        "results": [
-            {
-                "newFileName": "export_803_new.432f9e73-6eb4-4737-8656-ef9b335933f2.csv",
-                "originalFileName": "export_803_new.csv"
-            }
-        ]
-    };
-    res.send(obj);
-})
-
-app.get('/userLevel', function (req, res) {
-    var obj = { isLogin: true, isManager: false, isSiteAdmin: true, isMember: false, isViewer: false, userName: "admin", userId: 1, isGatekeeper: false }
-    res.send(obj);
-});
-
-app.get('/portlets', function (req, res) {
-    var file = './portlets.json'
-
-    jsonfile.readFile(file)
-        .then((obj) => {
-            res.send(obj);
-        })
-        .catch(error => console.error(error))
-});
-
-app.get('/user/unit', function (req, res) {
-    var obj = { unit: 1 };
-    res.send(obj);
-})
-
-app.get('/chart_widgets', function (req, res) {
-    var file = ''
-    switch (req.query.id) {
-        case '1':
-            file = './chart_widgets/1.json'
-            break;
-        case '2':
-            file = './chart_widgets/2.json'
-            break;
-        case '3':
-            file = './chart_widgets/3.json'
-            break;
-        case '4':
-            file = './chart_widgets/4.json'
-            break;
-        case '5':
-            file = './chart_widgets/5.json'
-            break;
-        case '6':
-            file = './chart_widgets/6.json'
-            break;
-        case '7':
-            file = './chart_widgets/7.json'
-            break;
-        case '8':
-            file = './chart_widgets/8.json'
-            break;
-        case '9':
-            file = './chart_widgets/9.json'
-            break;
-        case '10':
-            file = './chart_widgets/10.json'
-            break;
-        default:
-            file = './chart_widgets/1.json'
-            break;
-
-    }
-    jsonfile.readFile(file)
-        .then((obj) => {
-            res.send(obj);
-        })
-        .catch(error => console.error(error))
-});
-
-app.get('/widgets_data', function (req, res) {
-    var file = ''
-    switch (req.query.id) {
-        case '1':
-            file = './widgets_data/1.json'
-            break;
-        case '2':
-            file = './widgets_data/2.json'
-            break;
-        case '3':
-            file = './widgets_data/3.json'
-            break;
-        case '4':
-            file = './widgets_data/4.json'
-            break;
-        case '5':
-            file = './widgets_data/5.json'
-            break;
-        case '6':
-            file = './widgets_data/6.json'
-            break;
-        case '7':
-            file = './widgets_data/7.json'
-            break;
-        case '8':
-            file = './widgets_data/8.json'
-            break;
-        case '9':
-            file = './widgets_data/9.json'
-            break;
-        case '10':
-            file = './widgets_data/10.json'
-            break;
-        default:
-            file = './widgets_data/1.json'
-            break;
-
-    }
-    jsonfile.readFile(file)
-        .then((obj) => {
-            res.send(obj);
-        })
-        .catch(error => console.error(error))
-});
-
-app.get('/language', function (req, res) {
-    var file = ''
-    switch (req.query.lang) {
-        case 'de-base':
-            file = './translate/de.json'
-            break;
-        case 'zh-base':
-            file = './translate/zh.json'
-            break;
-        case 'en-base':
-            file = './translate/en.json'
-            break;
-        case 'en-itemlist':
-            file = './translate/en-itemlist.json'
-            break;
-        case 'zh-itemlist':
-            file = './translate/zh-itemlist.json'
-            break;
-        default:
-            file = './translate/en.json'
-            break;
-
-    }
-    jsonfile.readFile(file)
-        .then((obj) => {
-            res.send(obj);
-        })
-        .catch(error => console.error(error))
-});
-
-app.get('/menu_status', function(req, res){
-    console.log("BBB002");
-    var file = '';
-    file = './connectorlib/actionMenuStatus.json';
-    jsonfile.readFile(file)
-        .then((obj) => {
-            res.send(obj);
-        })
-        .catch(error => console.error(error))
-});
 
 app.post('/users', function(req, res, next){
     
@@ -218,13 +54,123 @@ app.post('/users', function(req, res, next){
     console.log("DB", accountDB);
     if(accountDB.hasOwnProperty(req.body.userName)){
         console.log("success");
-        res.status(200).json({"test":"success"});
+        if(accountDB[req.body.userName].password == req.body.password)
+            res.status(200).json({
+                "patient_id": accountDB[req.body.userName].patient_id,
+                "userName": accountDB[req.body.userName].userName
+            });
+        else
+            res.status(404).json({"message": "password error"});
     }else{
         console.log("fail");
         res.status(404);
-        res.json({"test":"success"});
+        res.json({"message":"username error"});
     }
 })
+
+app.post('/user/create', function(req, res){
+    if(accountDB.hasOwnProperty(req.body.userName)){
+        res.status(404).json({"message": "username exist"});
+    }else{
+        console.log("aaa000", req.body);
+        var obj = {
+            "resourceType": "Patient",
+                "name": [{
+                    "given": [
+                        req.body.name
+                    ]
+                }
+            ]
+        }
+        request.post({
+            headers: {'content-type' : 'application/json'},
+            url: "http://hapi.fhir.org/baseR4/Patient?_format=json&_pretty=true",
+            body: JSON.stringify(obj)
+        }, (error, response, body)=> {
+            var patientRes = JSON.parse(body);
+            accountDB[req.body.userName] = {
+                password: req.body.password,
+                patient_id: patientRes.id
+            }
+            var obj = {
+                "users": []
+            }
+            for(const property in accountDB){
+                obj.users.push({
+                    "userName": property,
+                    "password": accountDB[property].password,
+                    "patient_id": accountDB[property].patient_id
+                })
+            }
+            let data = JSON.stringify(obj);
+            fs.writeFileSync('account.json', data);
+            res.status(200).json({"message": "create account success"});
+        })
+    }
+});
+
+app.delete('/user/delete', function(req, res){
+    if(accountDB.hasOwnProperty(req.body.userName)){
+        var options = {
+            url: "http://hapi.fhir.org/baseR4/Patient/"+ req.body.patient_id + "?_pretty=true",
+            hearder: {'content-type' : 'application/json'}
+        }
+        request.del(options,(err, response, body) =>{
+            delete accountDB[req.body.userName];
+            var obj = {
+                "users": []
+            }
+            for(const property in accountDB){
+                obj.users.push({
+                    "userName": property,
+                    "password": accountDB[property].password
+                })
+            }
+            let data = JSON.stringify(obj);
+            fs.writeFileSync('account.json', data);
+            res.status(200).json({"message": "delete account success"});
+        });
+    }else{
+        res.status(404).json({"message": "username doesn't exist"});
+    }
+}); 
+
+app.get('/test', (req, rest)=>{
+    var html = "";
+    var obj;
+    http.get('http://hapi.fhir.org/baseR4/Patient/56899', (res)=>{
+        res.on("data",(data)=>{
+            html+=data
+        })
+        res.on("end",()=>{
+            // console.log(html);
+            obj = JSON.parse(html);
+            rest.json(obj);
+        })
+    }).on('error', e =>{
+        console.log("error", e);
+    });
+});
+
+app.post('/test2', (req, res)=>{
+    var obj = {
+        "resourceType": "Patient",
+            "name": [{
+                "given": [
+                    "Hank"
+                ]
+            }
+        ]
+    }
+    request.post({
+        headers: {'content-type' : 'application/json'},
+        url: "http://hapi.fhir.org/baseR4/Patient?_format=json&_pretty=true",
+        body: JSON.stringify(obj)
+    }, (error, response, body)=> {
+        console.log(JSON.parse(body));
+        res.json(JSON.parse(body));
+    })
+});
 
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
