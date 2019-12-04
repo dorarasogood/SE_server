@@ -198,6 +198,31 @@ app.post('/test2', (req, res)=>{
     })
 });
 
+app.post('/users/password', (req,res,next)=>{
+    console.log("body: ", req.body);
+    if(accountDB.hasOwnProperty(req.body.userName) && accountDB[req.body.userName].password == req.body.oldPassword){
+            accountDB[req.body.userName] = {
+                password: req.body.newPassword,
+                patient_id: accountDB[req.body.userName].patient_id
+            };
+            var obj = {
+                "users": []
+            }
+            for(const property in accountDB){
+                obj.users.push({
+                    "userName": property,
+                    "password": accountDB[property].password,
+                    "patient_id": accountDB[property].patient_id
+                })
+            }
+            let data = JSON.stringify(obj);
+            fs.writeFileSync('account.json', data);
+            res.status(200).json({"message": "update account success"});
+    }else{
+        res.status(404).json({"message": "password not match"});
+    }
+})
+
 app.listen(3000, function () {
     console.log('Example app listening on port 3000!');
 });
