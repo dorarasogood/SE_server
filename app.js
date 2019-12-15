@@ -57,7 +57,7 @@ app.post('/users', function(req, res, next){
         if(accountDB[req.body.userName].password == req.body.password)
             res.status(200).json({
                 "patient_id": accountDB[req.body.userName].patient_id,
-                "userName": accountDB[req.body.userName].userName
+                "userName": req.body.userName
             });
         else
             res.status(404).json({"message": "password error"});
