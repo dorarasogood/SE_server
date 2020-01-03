@@ -1,9 +1,0 @@
-{
-    "new": true,
-    "edit": true,
-    "view": true,
-    "clone": true,
-    "delete": true,
-    "refresh": true,
-    "export_test": true
-}
